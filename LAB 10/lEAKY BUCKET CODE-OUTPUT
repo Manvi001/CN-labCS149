@@ -1,0 +1,54 @@
+*********************PROGRAM********************
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int no_of_queries, storage = 0, input_pkt_size, bucket_size, output_pkt_size;
+
+    // Taking user inputs
+    cout << "Enter the number of queries: ";
+    cin >> no_of_queries;
+
+    cout << "Enter the bucket size: ";
+    cin >> bucket_size;
+
+    cout << "Enter the input packet size: ";
+    cin >> input_pkt_size;
+
+    cout << "Enter the output packet size: ";
+    cin >> output_pkt_size;
+
+    // Running the algorithm
+    for (int i = 0; i < no_of_queries; i++) {
+        int size_left = bucket_size - storage;
+
+        if (input_pkt_size <= size_left) {
+            storage += input_pkt_size; // Add packet to bucket
+        } else {
+            cout << "Packet loss = " << input_pkt_size << endl; // Packet dropped
+        }
+
+        cout << "Buffer size = " << storage << " out of bucket size = " << bucket_size << endl;
+        storage -= output_pkt_size; // Leak packets
+        if (storage < 0) storage = 0; // Ensure no negative storage
+    }
+
+    return 0;
+}
+
+
+*****************************OUTPUT*************************************
+
+Enter the number of queries: 4
+Enter the bucket size: 10
+Enter the input packet size: 4
+Enter the output packet size: 1
+Buffer size = 4 out of bucket size = 10
+Buffer size = 7 out of bucket size = 10
+Buffer size = 10 out of bucket size = 10
+Packet loss = 4
+Buffer size = 9 out of bucket size = 10
+
+
+=== Code Execution Successful ===
